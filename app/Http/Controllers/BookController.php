@@ -12,4 +12,15 @@ final class BookController extends Controller
             'books' => Books::all(),
         ]);
     }
+
+    public function show(int $id)
+    {
+        $book = collect(Books::all())->firstWhere('id', $id);
+
+        abort_if($book === null, 404);
+
+        return view('books.show', [
+            'book' => $book,
+        ]);
+    }
 }
