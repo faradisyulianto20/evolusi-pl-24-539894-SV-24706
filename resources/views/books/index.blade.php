@@ -34,7 +34,7 @@
 
             <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($books as $book)
-                    <article class="group bg-white border border-[#E3E3E0] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 flex flex-col cursor-pointer">
+                    <a href="/books/{{ $book['id'] }}" class="group bg-white border border-[#E3E3E0] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-amber-500/40 transition-all duration-300 flex flex-col cursor-pointer">
                         <div class="overflow-hidden p-3 bg-gray-100">
                             <img
                                 src="{{ asset('images/' . $book['image']) }}"
@@ -70,7 +70,7 @@
                                 {{ $book['snippet'] }}
                             </p>
                         </div>
-                    </article>
+                    </a>
                 @endforeach
             </section>
         </main>
