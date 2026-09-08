@@ -33,12 +33,17 @@
                 </div>
 
                 <div class="flex-1">
+                    <h1 class="text-4xl font-extrabold tracking-tight">{{ $book['title'] }}</h1>
+                    <p class="mt-2 text-lg text-[#62605b]">{{ $book['author'] }} · {{ $book['year'] }}</p>
+
+                    <p class="mt-2 text-sm text-[#62605b]">{{ $book['snippet'] }}</p>
+
                     @php
                         $full = (int) floor($book['rating']);
                         $half = ($book['rating'] - $full) >= 0.5;
                     @endphp
 
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 mt-4">
                         <span class="inline-flex items-center gap-0.5 px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-semibold" title="Rating {{ $book['rating'] }}">
                             @for ($i = 0; $i < $full; $i++)
                                 <span>★</span>
@@ -55,11 +60,6 @@
                             {{ $book['genre'] }}
                         </span>
                     </div>
-
-                    <h1 class="mt-4 text-4xl font-extrabold tracking-tight">{{ $book['title'] }}</h1>
-                    <p class="mt-2 text-lg text-[#62605b]">{{ $book['author'] }} · {{ $book['year'] }}</p>
-
-                    <p class="mt-2 text-sm text-[#62605b]">{{ $book['snippet'] }}</p>
 
                     <div class="mt-8 border border-[#E3E3E0] rounded-2xl bg-white p-6">
                         <h2 class="text-sm font-semibold uppercase tracking-wider text-[#62605b]">Review Lengkap</h2>
