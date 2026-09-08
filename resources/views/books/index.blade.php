@@ -11,33 +11,25 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen flex flex-col">
-        <header class="sticky top-0 z-10 backdrop-blur bg-[#FDFDFC]/80 border-b border-[#E3E3E0]">
-            <nav class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-                <a href="/" class="font-bold text-xl tracking-tight">📚 Book Review</a>
-                <span class="text-sm text-[#62605b] hidden sm:inline">Temukan rekomendasi buku terbaik</span>
+        <header class="sticky top-0 z-10 backdrop-blur bg-[#FDFDFC]/90 border-b-2 border-[#111111] shadow-sm">
+            <nav class="w-full max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+                <a href="/" class="font-extrabold text-2xl sm:text-3xl tracking-tight text-[#111111]">📚 Book Review</a>
+                <span class="text-base sm:text-lg font-medium text-[#111111] hidden sm:inline">Temukan rekomendasi buku terbaik</span>
             </nav>
         </header>
 
         <main class="w-full max-w-6xl mx-auto px-6 py-12 flex-1">
-            <section class="hero mb-12 rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 border border-[#E3E3E0] px-8 py-10">
+            <section class="mb-12">
                 <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">
                     Rekomendasi Buku<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-rose-600">Pilihan Terbaik</span>
+                    <span class="text-[#111111]">Pilihan Terbaik</span>
                 </h1>
                 <p class="text-[#62605b] mt-4 max-w-xl text-lg leading-relaxed">
                     Kumpulan review jujur dari buku-buku yang wajib kamu baca, dari self development hingga programming.
                 </p>
-                <div class="flex flex-wrap gap-3 mt-6">
-                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E3E3E0] text-sm font-medium">
-                        📦 {{ count($books) }} Buku
-                    </span>
-                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E3E3E0] text-sm font-medium">
-                        🏷️ {{ collect($books)->pluck('genre')->unique()->count() }} Genre
-                    </span>
-                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#E3E3E0] text-sm font-medium">
-                        ⭐ {{ number_format(collect($books)->avg('rating'), 1) }} Rata-rata
-                    </span>
-                </div>
+                <p class="mt-4 text-base text-[#62605b]">
+                    {{ count($books) }} buku · {{ collect($books)->pluck('genre')->unique()->count() }} genre · rata-rata rating {{ number_format(collect($books)->avg('rating'), 1) }} ⭐
+                </p>
             </section>
 
             <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -52,8 +44,21 @@
                         </div>
                         <div class="p-5 flex flex-col flex-1">
                             <div class="flex items-center gap-2">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-sm font-semibold">
-                                    ★ {{ $book['rating'] }}
+                                @php
+                                    $full = (int) floor($book['rating']);
+                                    $half = ($book['rating'] - $full) >= 0.5;
+                                @endphp
+                                <span class="inline-flex items-center gap-0.5 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-sm font-semibold" title="Rating {{ $book['rating'] }}">
+                                    @for ($i = 0; $i < $full; $i++)
+                                        <span>★</span>
+                                    @endfor
+                                    @if ($half)
+                                        <span>⯨</span>
+                                    @endif
+                                    @for ($i = $full + ($half ? 1 : 0); $i < 5; $i++)
+                                        <span class="text-amber-700/30">★</span>
+                                    @endfor
+                                    <span class="ml-1">{{ $book['rating'] }}</span>
                                 </span>
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-gray-100 text-[#62605b] text-xs font-medium">
                                     {{ $book['genre'] }}
