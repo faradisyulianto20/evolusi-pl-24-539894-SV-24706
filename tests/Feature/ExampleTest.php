@@ -12,7 +12,14 @@ class ExampleTest extends TestCase
      */
     public function test_the_application_returns_a_successful_response(): void
     {
-        $response = $this->get('/');
+        $response = $this->withoutVite()->get('/');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_book_detail_page_returns_a_successful_response(): void
+    {
+        $response = $this->withoutVite()->get('/books/1');
 
         $response->assertStatus(200);
     }
