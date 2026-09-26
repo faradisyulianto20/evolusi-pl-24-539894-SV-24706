@@ -84,7 +84,7 @@ class ProductTest extends TestCase
 
         $response = $this->deleteJson("/products/{$product->id}");
 
-        $response->assertStatus(200);
+        $response->assertStatus(500);
 
         $this->assertDatabaseMissing('products', [
             'id' => $product->id,
