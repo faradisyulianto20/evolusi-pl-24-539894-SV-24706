@@ -152,6 +152,8 @@ jobs:
     runs-on: ubuntu-latest
     # Menunggu KEDUA pipeline (backend test + frontend build) hijau dulu
     needs: [ test, frontend-build ]
+    # Deploy HANYA dari branch main — PR dan feature branch skip job ini
+    if: github.ref == 'refs/heads/main'
     steps:
       # Ambil artifact dist/ hasil build dari job frontend-build.
       # Tidak ada npm run build di sini — artifact diteruskan langsung.
