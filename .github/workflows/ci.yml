@@ -150,10 +150,33 @@ jobs:
   staging:
     name: Deploy to Staging
     runs-on: ubuntu-latest
+    # Menunggu KEDUA pipeline (backend test + frontend build) hijau dulu
     needs: [ test, frontend-build ]
     steps:
-      - name: Echo Staging
-        run: echo "Deploy ke server staging (simulasi)"
+      # Ambil artifact dist/ hasil build dari job frontend-build.
+      # Tidak ada npm run build di sini — artifact diteruskan langsung.
+      - name: Download frontend dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+
+      # Tampilkan isi dist/ ke log sebagai bukti artifact berhasil diterima
+      - name: Show dist/ contents
+        run: |
+          echo "========================================"
+          echo "  Isi dist/ dari job frontend-build"
+          echo "========================================"
+          find dist/ -type f | sort
+          echo ""
+          echo "--- Ukuran total ---"
+          du -sh dist/
+          echo ""
+          echo "--- Detail per file ---"
+          ls -lhR dist/
+
+      - name: Simulate staging deploy
+        run: echo "Artifact frontend-dist diterima. Siap deploy ke staging."
 
   production:
     name: Deploy to Production
