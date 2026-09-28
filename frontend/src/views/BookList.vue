@@ -41,11 +41,13 @@ function imageUrl(image) {
 
 <template>
   <div class="bg-[#FDFDFC] text-[#1b1b18] min-h-screen flex flex-col">
-
     <!-- Header -->
     <header class="sticky top-0 z-10 backdrop-blur bg-[#FDFDFC]/90 border-b-2 border-[#111111] shadow-sm">
       <nav class="w-full max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-        <a href="/" class="font-extrabold text-2xl sm:text-3xl tracking-tight text-[#111111]">
+        <a
+          href="/"
+          class="font-extrabold text-2xl sm:text-3xl tracking-tight text-[#111111]"
+        >
           📚 Book Review
         </a>
         <span class="text-base sm:text-lg font-medium text-[#111111] hidden sm:inline">
@@ -56,7 +58,6 @@ function imageUrl(image) {
 
     <!-- Main -->
     <main class="w-full max-w-6xl mx-auto px-6 py-12 flex-1">
-
       <!-- Hero section -->
       <section class="mb-12">
         <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">
@@ -67,23 +68,35 @@ function imageUrl(image) {
           Kumpulan review jujur dari buku-buku yang wajib kamu baca,
           dari self development hingga programming.
         </p>
-        <p v-if="books.length" class="mt-4 text-base text-[#62605b]">
+        <p
+          v-if="books.length"
+          class="mt-4 text-base text-[#62605b]"
+        >
           {{ books.length }} buku · {{ totalGenres }} genre · rata-rata rating {{ averageRating }} ⭐
         </p>
       </section>
 
       <!-- Loading -->
-      <div v-if="loading" class="text-center py-24 text-[#62605b] text-lg">
+      <div
+        v-if="loading"
+        class="text-center py-24 text-[#62605b] text-lg"
+      >
         Memuat data…
       </div>
 
       <!-- Error -->
-      <div v-else-if="error" class="text-center py-24 text-red-500">
+      <div
+        v-else-if="error"
+        class="text-center py-24 text-red-500"
+      >
         {{ error }}
       </div>
 
       <!-- Grid buku -->
-      <section v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
         <RouterLink
           v-for="book in books"
           :key="book.id"
@@ -97,7 +110,7 @@ function imageUrl(image) {
               :src="imageUrl(book.image)"
               :alt="book.name"
               class="w-full aspect-[5/7] object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-            />
+            >
           </div>
 
           <!-- Info -->
@@ -109,9 +122,15 @@ function imageUrl(image) {
                        bg-amber-100 text-amber-700 text-sm font-semibold"
                 :title="`Rating ${book.rating}`"
               >
-                <template v-for="i in getStars(book.rating).full" :key="'f'+i">★</template>
+                <template
+                  v-for="i in getStars(book.rating).full"
+                  :key="'f'+i"
+                >★</template>
                 <template v-if="getStars(book.rating).half">⯨</template>
-                <template v-for="i in getStars(book.rating).empty" :key="'e'+i">
+                <template
+                  v-for="i in getStars(book.rating).empty"
+                  :key="'e'+i"
+                >
                   <span class="text-amber-700/30">★</span>
                 </template>
                 <span class="ml-1">{{ book.rating }}</span>
@@ -122,19 +141,23 @@ function imageUrl(image) {
             </div>
 
             <!-- Judul -->
-            <h2 class="mt-3 font-bold text-xl leading-snug tracking-tight">{{ book.name }}</h2>
-            <p class="text-sm text-[#62605b] mt-1">{{ book.author }} · {{ book.year }}</p>
-            <p class="mt-3 text-sm leading-relaxed text-[#1b1b18]/80 flex-1">{{ book.snippet }}</p>
+            <h2 class="mt-3 font-bold text-xl leading-snug tracking-tight">
+              {{ book.name }}
+            </h2>
+            <p class="text-sm text-[#62605b] mt-1">
+              {{ book.author }} · {{ book.year }}
+            </p>
+            <p class="mt-3 text-sm leading-relaxed text-[#1b1b18]/80 flex-1">
+              {{ book.snippet }}
+            </p>
           </div>
         </RouterLink>
       </section>
-
     </main>
 
     <!-- Footer -->
     <footer class="w-full max-w-6xl mx-auto px-6 py-8 border-t border-[#E3E3E0] text-sm text-[#62605b]">
       © {{ new Date().getFullYear() }} Book Review. Dibuat untuk tugas Evolusi PL.
     </footer>
-
   </div>
 </template>
