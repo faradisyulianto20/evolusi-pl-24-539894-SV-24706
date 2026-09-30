@@ -5,13 +5,14 @@ vendor/
 .env
 .env.*
 !.env.example
+database/*.sqlite
 bootstrap/cache/*.php
 storage/logs/*.log
 storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
-public/build/
 public/hot
+*.log
 .idea/
 .vscode/
 *.DS_Store
